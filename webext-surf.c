@@ -42,6 +42,7 @@ readsock(GIOChannel *s, GIOCondition c, gpointer unused)
 	WebKitWebPage *page;
 	JSCContext *jsc;
 	GError *gerr = NULL;
+	int jslen = 0;
 	gsize msgsz;
 
 	if (g_io_channel_read_chars(s, msg, sizeof(msg), &msgsz, &gerr) !=
@@ -69,21 +70,19 @@ readsock(GIOChannel *s, GIOCondition c, gpointer unused)
 	case 'h':
 		if (msgsz != 3)
 			return TRUE;
-		snprintf(js, sizeof(js),
-		         "window.scrollBy(window.innerWidth/100*%d,0);",
-		         msg[2]);
-		jsc_context_evaluate(jsc, js, -1);
+		jslen = snprintf(js, sizeof(js),
+		                 "window.scrollBy(window.innerWidth/100*%d,0);",
+		                 msg[2]);
 		break;
 	case 'v':
 		if (msgsz != 3)
 			return TRUE;
-		snprintf(js, sizeof(js),
-		         "window.scrollBy(0,window.innerHeight/100*%d);",
-		         msg[2]);
-		jsc_context_evaluate(jsc, js, -1);
+		jslen = snprintf(js, sizeof(js),
+		                 "window.scrollBy(0,window.innerHeight/100*%d);",
+		                 msg[2]);
 		break;
 	}
-
+	if (jslen) jsc_context_evaluate(jsc, js, -1);
 	return TRUE;
 }
 
