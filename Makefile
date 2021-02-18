@@ -54,8 +54,10 @@ dist: distclean
 
 install: all
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f surf $(DESTDIR)$(PREFIX)/bin
-	chmod 755 $(DESTDIR)$(PREFIX)/bin/surf
+	for app in surf bookmarkurl loadbookmark; do \
+		cp -f $$app $(DESTDIR)$(PREFIX)/bin; \
+		chmod 755 $(DESTDIR)$(PREFIX)/bin/$$app; \
+	done
 	mkdir -p $(DESTDIR)$(LIBDIR)
 	cp -f $(WLIB) $(DESTDIR)$(LIBDIR)
 	for wlib in $(WLIB); do \
@@ -66,7 +68,9 @@ install: all
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/surf.1
 
 uninstall:
-	rm -f $(DESTDIR)$(PREFIX)/bin/surf
+	for app in surf bookmarkurl loadbookmark; do \
+		rm -f $(DESTDIR)$(PREFIX)/bin/$$app; \
+	done
 	rm -f $(DESTDIR)$(MANPREFIX)/man1/surf.1
 	for wlib in $(WLIB); do \
 	    rm -f $(DESTDIR)$(LIBDIR)/$$wlib; \
