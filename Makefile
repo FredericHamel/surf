@@ -54,7 +54,7 @@ dist: distclean
 
 install: all
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	for app in surf bookmarkurl loadbookmark; do \
+	for app in surf surf-open.sh bookmarkurl loadbookmark; do \
 		cp -f $$app $(DESTDIR)$(PREFIX)/bin; \
 		chmod 755 $(DESTDIR)$(PREFIX)/bin/$$app; \
 	done
