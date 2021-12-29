@@ -4,7 +4,9 @@ VERSION = 2.1
 # Customize below to fit your system
 
 # paths
-PREFIX = /usr/local
+ifndef PREFIX
+PREFIX = /usr/lib
+endif
 MANPREFIX = $(PREFIX)/share/man
 LIBPREFIX = $(PREFIX)/lib
 LIBDIR = $(LIBPREFIX)/surf
